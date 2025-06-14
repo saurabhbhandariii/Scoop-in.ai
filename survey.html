@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scoop-in.ai Survey</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom right, #e3eaf2, #d3dce6);
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 80px auto;
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .question {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .question-label {
+      font-weight: 600;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .radio-group,
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-item label {
+      font-weight: 400;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+      accent-color: #333;
+    }
+
+    select,
+    textarea,
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      background-color: #f4f4f4;
+      font-size: 1rem;
+    }
+
+    button {
+      margin-top: 40px;
+      padding: 14px 30px;
+      background-color: #111;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Scoop-in.ai Survey</h1>
+    <form id="survey-form">
+      
+      <div class="question">
+        <label class="question-label">1. Which platforms do you watch short-form videos on?</label>
+        <div class="checkbox-group">
+          <div class="option-item"><label><input type="checkbox" name="platforms" value="TikTok" /> TikTok</label></div>
+          <div class="option-item"><label><input type="checkbox" name="platforms" value="YouTube Shorts" /> YouTube Shorts</label></div>
+          <div class="option-item"><label><input type="checkbox" name="platforms" value="Instagram Reels" /> Instagram Reels</label></div>
+          <div class="option-item"><label><input type="checkbox" name="platforms" value="Facebook" /> Facebook</label></div>
+          <div class="option-item"><label><input type="checkbox" name="platforms" value="Snapchat" /> Snapchat</label></div>
+          <div class="option-item"><label><input type="checkbox" name="platforms" value="Other" /> Other</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label class="question-label">2. How much time do you spend daily watching short videos?</label>
+        <select name="daily_time" required>
+          <option value="">-- Select --</option>
+          <option value="<30 mins"><30 mins</option>
+          <option value="30–60 mins">30–60 mins</option>
+          <option value="1–2 hrs">1–2 hrs</option>
+          <option value="2–3 hrs">2–3 hrs</option>
+          <option value="3+ hrs">3+ hrs</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label class="question-label">3. Why do you watch short-form videos?</label>
+        <div class="checkbox-group">
+          <div class="option-item"><label><input type="checkbox" name="reasons" value="Entertainment" /> Entertainment</label></div>
+          <div class="option-item"><label><input type="checkbox" name="reasons" value="News" /> News</label></div>
+          <div class="option-item"><label><input type="checkbox" name="reasons" value="Education" /> Education</label></div>
+          <div class="option-item"><label><input type="checkbox" name="reasons" value="Trends" /> Trends</label></div>
+          <div class="option-item"><label><input type="checkbox" name="reasons" value="Product Reviews" /> Product Reviews</label></div>
+          <div class="option-item"><label><input type="checkbox" name="reasons" value="Other" /> Other</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label class="question-label">4. Have you seen false info in a short video?</label>
+        <div class="radio-group">
+          <div class="option-item"><label><input type="radio" name="seen_false_info" value="Yes" /> Yes</label></div>
+          <div class="option-item"><label><input type="radio" name="seen_false_info" value="No" /> No</label></div>
+          <div class="option-item"><label><input type="radio" name="seen_false_info" value="Not sure" /> Not sure</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label class="question-label">5. What would make you trust a tool that identifies misinformation?</label>
+        <textarea name="trust_reason" rows="4" placeholder="Your thoughts..."></textarea>
+      </div>
+
+      <div class="question">
+        <label class="question-label">6. Would you be interested in early access?</label>
+        <div class="radio-group">
+          <div class="option-item"><label><input type="radio" name="early_access" value="Yes" /> Yes</label></div>
+          <div class="option-item"><label><input type="radio" name="early_access" value="No" /> No</label></div>
+        </div>
+      </div>
+
+      <div class="question">
+        <label class="question-label">7. If yes, leave your email:</label>
+        <input type="email" name="early_email" placeholder="you@example.com" />
+      </div>
+
+      <div class="question">
+        <label class="question-label">8. What country do you currently live in?</label>
+        <select name="country" required>
+          <option value="">-- Select your country --</option>
+          <option value="United States">United States</option>
+          <option value="India">India</option>
+          <option value="United Kingdom">USA</option>
+          <!-- Add more as needed -->
+        </select>
+      </div>
+
+      <div class="question">
+        <label class="question-label">9. What age range are you in?</label>
+        <select name="age_range">
+          <option value="<18"><18</option>
+          <option value="18–24">18–24</option>
+          <option value="25–34">25–34</option>
+          <option value="35–44">35–44</option>
+          <option value="45–54">45–54</option>
+          <option value="55+">55+</option>
+        </select>
+      </div>
+
+      <button type="submit">Submit Survey</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("survey-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const data = new FormData(e.target);
+      const payload = {};
+      for (const [key, value] of data.entries()) {
+        if (payload[key]) {
+          payload[key] += `, ${value}`;
+        } else {
+          payload[key] = value;
+        }
+      }
+      fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvery/sheet1", {
+        method: "POST",
+        body: JSON.stringify({ sheet1: payload }),
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => (res.ok ? alert("✅ Thank you for your response!") : alert("❌ Submission failed.")))
+        .then(() => e.target.reset());
+    });
+  </script>
+</body>
+</html>
