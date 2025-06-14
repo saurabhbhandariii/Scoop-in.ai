@@ -1166,19 +1166,25 @@
         </nav>
     </header>
     <div style="margin-top: 10px;">
-  <button onclick="window.open('survey.html', '_blank')" style="
-    background-color: #000;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin-left: 30px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 16px;
-  ">
-    🧠 Take the Survey
-  </button>
+ <button onclick="window.open('survey.html', '_blank')" style="
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  margin-left: 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  transition: all 0.35s ease;
+  transform: scale(1);
+"
+onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 28px rgba(0, 0, 0, 0.25)'"
+onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 24px rgba(0, 0, 0, 0.2)'">
+   Tell Us What You Think
+</button>
+
 </div>
 
     <section class="bg-gradient-to-b from-[#ffffff] to-[var(--light-background-color)] lg:py-2 code-section"
@@ -1491,4 +1497,5 @@
 </body>
 
 </html>
+
 
