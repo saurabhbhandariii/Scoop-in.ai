@@ -188,32 +188,41 @@
   <script>
     document.getElementById("survey-form").addEventListener("submit", function (e) {
       e.preventDefault();
-      const data = new FormData(e.target);
-      const payload = {};
 
-      for (const [key, value] of data.entries()) {
-        if (payload[key]) {
-          payload[key] += `, ${value}`;
-        } else {
-          payload[key] = value;
-        }
-      }
+      const form = e.target;
+      const payload = {
+        platforms: getCheckboxValues("platforms"),
+        daily_time: form.daily_time.value,
+        reasons: getCheckboxValues("reasons"),
+        seen_false_info: form.seen_false_info.value,
+        trust_reason: form.trust_reason.value,
+        early_access: form.early_access.value,
+        early_email: form.early_email.value,
+        country: form.country.value,
+        age_range: form.age_range.value
+      };
 
       fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvey/sheet1", {
         method: "POST",
-        body: JSON.stringify({ sheet1: payload }),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sheet1: payload })
       })
-        .then((res) => {
-          if (res.ok) {
-            alert("Thank you for your response!");
-            window.location.href = "index.html";
-          } else {
-            alert("Submission failed.");
-          }
-        })
-        .catch(() => alert("Network error. Please try again."));
+      .then(res => {
+        if (res.ok) {
+          alert("Thank you for your response!");
+          window.location.href = "index.html";
+        } else {
+          alert("Submission failed.");
+        }
+      })
+      .catch(() => alert("Network error. Please try again."));
     });
+
+    function getCheckboxValues(name) {
+      return Array.from(document.querySelectorAll('input[name="${name}"]:checked'))
+        .map(input => input.value)
+        .join(", ");
+    }
   </script>
 </body>
 </html>
