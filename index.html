@@ -3,167 +3,634 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scoop-in | Unveiling the Truth Behind Videos</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Scoop-in | Real-Time Fact-Checking & Data Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #7B2CBF;
+            --primary-light: #9D4EDD;
+            --secondary: #240046;
+            --accent: #FF9E00;
+            --dark: #10002B;
+            --light: #f8f9fa;
+            --text: #212529;
+            --text-light: #6c757d;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Animated Gradient Header */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 120px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                45deg,
+                rgba(123, 44, 191, 0.8) 0%,
+                rgba(36, 0, 70, 0.9) 100%
+            );
+            z-index: 1;
+            animation: gradientShift 12s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(to right, white, #E0AAFF);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin: 40px 0 20px;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+        
+        .section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-dark {
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        .section-dark p {
+            color: rgba(255,255,255,0.8);
+        }
+        
+        .section-accent {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        
+        /* Process Steps with Animation */
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .step {
+            flex: 1 1 300px;
+            background: white;
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+        
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+            transition: all 0.4s ease;
+        }
+        
+        .step:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+        
+        .step-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 15px;
+            transition: all 0.4s ease;
+        }
+        
+        .step:hover .step-number {
+            color: var(--primary-light);
+            transform: scale(1.1);
+        }
+        
+        /* Monetization Cards */
+        .monetization-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 60px 0;
+        }
+        
+        .card {
+            flex: 1 1 300px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        
+        .card h3 {
+            color: white;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        /* Contact Form */
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transform: translateY(0);
+            transition: all 0.4s ease;
+        }
+        
+        .contact-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(123, 44, 191, 0.2);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.4);
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 30px;
+            margin: 40px 0;
+            justify-content: center;
+        }
+        
+        .social-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .social-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* ISO Badges */
+        .iso-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 50px 0;
+        }
+        
+        .iso-badge {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .iso-badge:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        footer p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .animate.animated {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 3rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 80px 0;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 70px 0;
+            }
+            
+            .process-steps, .monetization-cards {
+                flex-direction: column;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div class="container">
-            <div class="logo">
-                <h1>Scoop-in</h1>
-            </div>
-            <nav>
-                <button class="hamburger-menu" aria-label="Toggle navigation">
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                    <span class="bar"></span>
-                </button>
-                <ul class="nav-links">
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#technology">Our Technology</a></li>
-                    <li><a href="#mission">Our Mission</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
+        <div class="container header-content">
+            <h1>Scoop-in</h1>
+            <p>The Real-Time Fact-Checking & Data Intelligence Layer for the Mobile-First World</p>
         </div>
     </header>
-
-    <main>
-        <section id="hero" class="hero-section">
-            <div class="container">
-                <div class="hero-content">
-                    <h2>Unveiling the Truth. Eliminating Deception.</h2>
-                    <p>Scoop-in is your pioneering platform dedicated to exposing misinformation and deepfakes in video content, empowering you with verified facts.</p>
-                    <a href="#how-it-works" class="btn btn-primary">Discover How</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="how-it-works" class="section fade-in-scroll">
-            <div class="container">
-                <h3>How It Works: Our Verification Process</h3>
-                <div class="grid-layout">
-                    <div class="grid-item">
-                        <i class="fas fa-video"></i>
-                        <h4>Video Submission & Ingestion</h4>
-                        <p>Users submit videos for verification or our AI flags suspicious content. Videos are then broken down into core components.</p>
-                    </div>
-                    <div class="grid-item">
-                        <i class="fas fa-robot"></i>
-                        <h4>AI-Powered Analysis</h4>
-                        <p>Our intelligent engines meticulously analyze every aspect: audio, visual, and behavioral patterns, leveraging cutting-edge AI.</p>
-                    </div>
-                    <div class="grid-item">
-                        <i class="fas fa-users-cog"></i>
-                        <h4>Community Validation & Governance</h4>
-                        <p>The Scoop-in community reviews AI findings, contributes insights, and participates in transparent governance, adding a crucial human layer.</p>
-                    </div>
-                    <div class="grid-item">
-                        <i class="fas fa-check-circle"></i>
-                        <h4>Transparent Verdict</h4>
-                        <p>A clear, blockchain-verified verdict is issued, detailing the truthfulness of the content and the evidence supporting it.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="technology" class="section bg-light-blue fade-in-scroll">
-            <div class="container">
-                <h3>The Power Behind Scoop-in: Our Core Technology Stack</h3>
-                <div class="tech-grid">
-                    <div class="tech-card">
-                        <div class="icon-wrapper"><i class="fas fa-microphone-alt"></i></div>
-                        <h4>NLP-Driven Speech-to-Text</h4>
-                        <p>Sophisticated Natural Language Processing (NLP) converts spoken words within videos into accurate, searchable text. This enables deep textual analysis, keyword extraction, and cross-referencing with verified data sources to detect discrepancies in narratives.</p>
-                    </div>
-                    <div class="tech-card">
-                        <div class="icon-wrapper"><i class="fas fa-lock"></i></div>
-                        <h4>Blockchain: Transparency & Integrity</h4>
-                        <p>Our backend leverages blockchain technology to ensure unparalleled transparency and immutability. Every verification result, community vote, and data point is recorded on a distributed ledger, providing an auditable and tamper-proof history.</p>
-                        <ul>
-                            <li><strong>Backend Transparency:</strong> A public, verifiable record of all analyses and verdicts.</li>
-                            <li><strong>Community Incentive & Governance Layer:</strong> Smart contracts power token-based rewards for accurate contributions and enable decentralized decision-making on platform rules and dispute resolution.</li>
-                        </ul>
-                    </div>
-                    <div class="tech-card">
-                        <div class="icon-wrapper"><i class="fas fa-chart-line"></i></div>
-                        <h4>Behavioral Data Intelligence Engine</h4>
-                        <p>This engine analyzes patterns of dissemination, viewer engagement, and source behavior across various platforms. It identifies anomalous activities, coordinated disinformation campaigns, and potential deepfake indicators by mapping digital footprints and propagation strategies.</p>
-                    </div>
-                    <div class="tech-card">
-                        <div class="icon-wrapper"><i class="fas fa-cube"></i></div>
-                        <h4>Component Intelligence Layer</h4>
-                        <p>Beyond surface-level analysis, this layer dissects videos into their fundamental components—pixels, frames, audio waveforms, and metadata. It applies specialized AI models to detect inconsistencies, digital alterations, and anomalies in each component, flagging manipulated visuals, audio discrepancies, or forged metadata.</p>
-                    </div>
-                    <div class="tech-card">
-                        <div class="icon-wrapper"><i class="fas fa-brain"></i></div>
-                        <h4>AI-Driven Anomaly Detection & Cross-Referencing</h4>
-                        <p>Our advanced AI continuously learns from new data, identifying subtle patterns indicative of deception. It cross-references claims and visual evidence against vast databases of facts, news archives, and known deepfake signatures, providing real-time alerts and flagging emerging threats.</p>
-                    </div>
-                    <div class="tech-card">
-                        <div class="icon-wrapper"><i class="fas fa-shield-alt"></i></div>
-                        <h4>Human Expert Oversight & Validation</h4>
-                        <p>While AI is powerful, critical verification cases are escalated to a network of human experts and fact-checkers. This synergistic approach ensures the highest level of accuracy, blending computational efficiency with nuanced human judgment.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="mission" class="section fade-in-scroll">
-            <div class="container">
-                <h3>Our Mission: A More Truthful Digital World</h3>
-                <p>In an era flooded with digital content, separating fact from fiction is paramount. Scoop-in is committed to building a robust, transparent, and community-driven ecosystem where truth prevails. We aim to empower individuals, media organizations, and businesses with the tools to confidently navigate the digital landscape, fostering trust and accountability.</p>
-                <a href="#contact" class="btn btn-secondary">Join Our Mission</a>
-            </div>
-        </section>
-
-        <section id="contact" class="section bg-gradient fade-in-scroll">
-            <div class="container">
-                <h3>Get In Touch</h3>
-                <p>Have questions, partnership inquiries, or want to contribute to the Scoop-in community? We'd love to hear from you.</p>
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
-                    <button type="submit" class="btn btn-light">Send Message</button>
-                </form>
-            </div>
-        </section>
-    </main>
-
-    <footer>
+    
+    <section class="section">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h4>Scoop-in</h4>
-                    <p>Unveiling Truth. Empowering Trust.</p>
-                </div>
-                <div class="footer-links">
-                    <h5>Quick Links</h5>
-                    <ul>
-                        <li><a href="#hero">Home</a></li>
-                        <li><a href="#how-it-works">How It Works</a></li>
-                        <li><a href="#technology">Technology</a></li>
-                        <li><a href="#mission">Mission</a></li>
-                    </ul>
-                </div>
-                <div class="footer-social">
-                    <h5>Connect With Us</h5>
-                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Scoop-in. All rights reserved.</p>
+            <h2 class="animate">From Misinformation to Trust</h2>
+            <p class="animate">In today's mobile-first information ecosystem, short-form video platforms dominate global content consumption. Yet these formats create systemic risk: viral misinformation spreads faster than fact-based narratives.</p>
+            <p class="animate">Scoop-in addresses this challenge by building a multi-layered system that combines AI, blockchain, and community-driven verification to create a real-time fact-checking layer for the digital world.</p>
+            
+            <div class="iso-badges">
+                <div class="iso-badge animate">ISO 412001</div>
+                <div class="iso-badge animate">ISO 2023</div>
+                <div class="iso-badge animate">EU AI COMPLIANCE</div>
             </div>
         </div>
+    </section>
+    
+    <section class="section section-accent">
+        <div class="container">
+            <h2 class="animate">How Scoop-in Works</h2>
+            <p class="animate">To combat misinformation and provide device intelligence, Scoop-in integrates AI-driven automation with human expertise.</p>
+            
+            <div class="process-steps">
+                <div class="step animate">
+                    <div class="step-number">1</div>
+                    <h3>Real-Time Fact Checking</h3>
+                    <p>Extracts audio from videos using speech-to-text technology. NLP pipeline identifies factual claims and verifies them against knowledge graphs. Results displayed in real-time via browser extension and mobile app.</p>
+                </div>
+                
+                <div class="step animate">
+                    <div class="step-number">2</div>
+                    <h3>Blockchain Transparency</h3>
+                    <p>Every verified claim and its metadata are immutably recorded on blockchain (Polygon, Arweave). Ensures public transparency, tamper resistance, and auditability for all fact-checking results.</p>
+                </div>
+                
+                <div class="step animate">
+                    <div class="step-number">3</div>
+                    <h3>Community Governance</h3>
+                    <p>Users flag, validate, and refute claims. Reputation system rewards accurate contributors. Token-based incentives drive community participation and data contribution.</p>
+                </div>
+                
+                <div class="step animate">
+                    <div class="step-number">4</div>
+                    <h3>Component Intelligence</h3>
+                    <p>Collects phone model data via user input and technical fingerprinting. Model-to-component mapping enables construction of real-world component penetration dataset valuable to semiconductor companies and investors.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section section-dark">
+        <div class="container">
+            <h2 class="animate">Beyond Fact-Checking</h2>
+            <h3 class="animate">The Scoop-in Value Proposition</h3>
+            
+            <div class="monetization-cards">
+                <div class="card animate">
+                    <h3>For End Users</h3>
+                    <p>Browser/mobile plugin flags suspect content in real time. Parental controls to protect children from misinformation. Fact-check dashboard for curious users.</p>
+                </div>
+                
+                <div class="card animate">
+                    <h3>For Governments & NGOs</h3>
+                    <p>Election-related misinformation monitoring. Real-time dashboards of coordinated disinformation campaigns. Digital literacy initiatives powered by accurate data.</p>
+                </div>
+                
+                <div class="card animate">
+                    <h3>For Semiconductor Companies</h3>
+                    <p>Access to accurate real-world component penetration data. Track competitive dynamics in CPU, memory, display, and sensor markets. Inform supply chain strategy with ground-truth data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section">
+        <div class="container">
+            <h2 class="animate">Connect With Us</h2>
+            <p class="animate">Let's build the future of trusted information together.</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link animate">LinkedIn</a>
+                <a href="mailto:info@scoop-in.com" class="social-link animate">Email</a>
+                <a href="#" class="social-link animate">Twitter</a>
+            </div>
+            
+            <div class="contact-form animate">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="inquiry">Your Inquiry</label>
+                        <textarea id="inquiry" required></textarea>
+                    </div>
+                    
+                    <button type="submit">SUBMIT YOUR MESSAGE</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>© 2025 Scoop-in Ltd | Building the Future of Trusted Information</p>
+            <p>Pioneering fact-checking shaped by technology and community.</p>
+        </div>
     </footer>
-
-    <script src="script.js"></script>
+    
+    <script>
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const inquiry = document.getElementById('inquiry').value;
+            
+            // Here you would typically send this data to a server
+            console.log('Form submitted:', { firstName, lastName, email, phone, inquiry });
+            
+            // Show success message
+            alert('Thank you for your message! We will get back to you soon.');
+            
+            // Reset form
+            this.reset();
+        });
+        
+        // Scroll animations
+        const animateElements = document.querySelectorAll('.animate');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        animateElements.forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>
