@@ -12,7 +12,6 @@
       padding: 0;
       background: linear-gradient(to bottom right, #e3eaf2, #d3dce6);
     }
-
     .container {
       max-width: 700px;
       margin: 80px auto;
@@ -21,32 +20,27 @@
       border-radius: 20px;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
     }
-
     h1 {
       font-size: 2rem;
       margin-bottom: 30px;
       text-align: center;
     }
-
     .question {
       margin-bottom: 30px;
       padding-bottom: 20px;
       border-bottom: 1px solid #ddd;
     }
-
     .question-label {
       font-weight: 600;
       display: block;
       margin-bottom: 12px;
     }
-
     .radio-group,
     .checkbox-group {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
-
     .option-item label {
       font-weight: 400;
       font-size: 1rem;
@@ -54,12 +48,10 @@
       align-items: center;
       gap: 10px;
     }
-
     input[type="radio"],
     input[type="checkbox"] {
       accent-color: #333;
     }
-
     select,
     textarea,
     input[type="text"],
@@ -72,7 +64,6 @@
       background-color: #f4f4f4;
       font-size: 1rem;
     }
-
     button {
       margin-top: 40px;
       padding: 14px 30px;
@@ -84,7 +75,6 @@
       font-size: 1rem;
       transition: background 0.3s ease;
     }
-
     button:hover {
       background-color: #333;
     }
@@ -94,7 +84,6 @@
   <div class="container">
     <h1>Scoop-in.ai Survey</h1>
     <form id="survey-form">
-      
       <div class="question">
         <label class="question-label">1. Which platforms do you watch short-form videos on?</label>
         <div class="checkbox-group">
@@ -106,7 +95,6 @@
           <div class="option-item"><label><input type="checkbox" name="platforms" value="Other" /> Other</label></div>
         </div>
       </div>
-
       <div class="question">
         <label class="question-label">2. How much time do you spend daily watching short videos?</label>
         <select name="daily_time" required>
@@ -118,7 +106,6 @@
           <option value="3+ hrs">3+ hrs</option>
         </select>
       </div>
-
       <div class="question">
         <label class="question-label">3. Why do you watch short-form videos?</label>
         <div class="checkbox-group">
@@ -130,7 +117,6 @@
           <div class="option-item"><label><input type="checkbox" name="reasons" value="Other" /> Other</label></div>
         </div>
       </div>
-
       <div class="question">
         <label class="question-label">4. Have you seen false info in a short video?</label>
         <div class="radio-group">
@@ -139,12 +125,10 @@
           <div class="option-item"><label><input type="radio" name="seen_false_info" value="Not sure" /> Not sure</label></div>
         </div>
       </div>
-
       <div class="question">
         <label class="question-label">5. What would make you trust a tool that identifies misinformation?</label>
         <textarea name="trust_reason" rows="4" placeholder="Your thoughts..."></textarea>
       </div>
-
       <div class="question">
         <label class="question-label">6. Would you be interested in early access?</label>
         <div class="radio-group">
@@ -152,12 +136,10 @@
           <div class="option-item"><label><input type="radio" name="early_access" value="No" /> No</label></div>
         </div>
       </div>
-
       <div class="question">
         <label class="question-label">7. If yes, leave your email:</label>
         <input type="email" name="early_email" placeholder="you@example.com" />
       </div>
-
       <div class="question">
         <label class="question-label">8. What country do you currently live in?</label>
         <select name="country" required>
@@ -168,7 +150,6 @@
           <!-- Add more as needed -->
         </select>
       </div>
-
       <div class="question">
         <label class="question-label">9. What age range are you in?</label>
         <select name="age_range">
@@ -180,55 +161,55 @@
           <option value="55+">55+</option>
         </select>
       </div>
-
+      <!-- Add more form fields here if you want to support believed_wrong_info, misinfo_categories, etc. -->
       <button type="submit">Submit Survey</button>
     </form>
   </div>
+  <script>
+    document.getElementById("survey-form").addEventListener("submit", function (e) {
+      e.preventDefault();
 
- <script>
-  document.getElementById("survey-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    const payload = {};
+      const form = e.target;
+      // Prepare the payload with all required fields in your sheet, even if some are blank
+      const payload = {
+        platforms: getCheckboxValues("platforms"),
+        daily_time: form.daily_time.value,
+        reasons: getCheckboxValues("reasons"),
+        seen_false_info: form.seen_false_info.value,
+        believed_wrong_info: "",      // not present in form
+        misinfo_categories: "",       // not present in form
+        trust_level: "",              // not present in form
+        use_tool: "",                 // not present in form
+        tool_preference: "",          // not present in form
+        trust_reason: form.trust_reason.value,
+        early_access: form.early_access.value,
+        early_email: form.early_email.value,
+        country: form.country.value,
+        age_range: form.age_range.value,
+        misinfo_language: ""          // not present in form
+      };
 
-    // Helper function to get all values for a checkbox group
-    const getCheckboxValues = (name) =>
-      Array.from(form.querySelectorAll(`input[name="${name}"]:checked`))
-        .map((el) => el.value)
-        .join(", ");
-
-    // Handle multi-select (checkboxes)
-    payload.platforms = getCheckboxValues("platforms");
-    payload.reasons = getCheckboxValues("reasons");
-
-    
-    payload.daily_time = data.get("daily_time") || "";
-    payload.seen_false_info = data.get("seen_false_info") || "";
-    payload.trust_reason = data.get("trust_reason") || "";
-    payload.early_access = data.get("early_access") || "";
-    payload.early_email = data.get("early_email") || "";
-    payload.country = data.get("country") || "";
-    payload.age_range = data.get("age_range") || "";
-
-    fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvey/sheet1", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ sheet1: payload })
-    })
-      .then((res) => {
+      fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvey/sheet1", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sheet1: payload })
+      })
+      .then(res => {
         if (res.ok) {
           alert("Thank you for your response!");
           window.location.href = "index.html";
         } else {
-          alert("Submission failed. Please try again.");
+          res.text().then(text => alert(`Submission failed: ${text}`));
         }
       })
       .catch(() => alert("Network error. Please try again."));
-  });
-</script>
+    });
 
+    function getCheckboxValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`))
+        .map(input => input.value)
+        .join(", ");
+    }
+  </script>
 </body>
 </html>
