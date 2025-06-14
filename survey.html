@@ -164,7 +164,7 @@
           <option value="">-- Select your country --</option>
           <option value="United States">United States</option>
           <option value="India">India</option>
-          <option value="United Kingdom">USA</option>
+          <option value="United Kingdom">United Kingdom</option>
           <!-- Add more as needed -->
         </select>
       </div>
@@ -190,6 +190,7 @@
       e.preventDefault();
       const data = new FormData(e.target);
       const payload = {};
+
       for (const [key, value] of data.entries()) {
         if (payload[key]) {
           payload[key] += `, ${value}`;
@@ -197,13 +198,21 @@
           payload[key] = value;
         }
       }
+
       fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvey/sheet1", {
         method: "POST",
         body: JSON.stringify({ sheet1: payload }),
         headers: { "Content-Type": "application/json" },
       })
-        .then((res) => (res.ok ? alert(" Thank you for your response!") : alert(" Submission failed.")))
-        .then(() => e.target.reset());
+        .then((res) => {
+          if (res.ok) {
+            alert("Thank you for your response!");
+            window.location.href = "index.html";
+          } else {
+            alert("Submission failed.");
+          }
+        })
+        .catch(() => alert("Network error. Please try again."));
     });
   </script>
 </body>
