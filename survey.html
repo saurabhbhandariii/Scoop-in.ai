@@ -185,44 +185,50 @@
     </form>
   </div>
 
-  <script>
-    document.getElementById("survey-form").addEventListener("submit", function (e) {
-      e.preventDefault();
+ <script>
+  document.getElementById("survey-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const form = e.target;
+    const data = new FormData(form);
+    const payload = {};
 
-      const form = e.target;
-      const payload = {
-        platforms: getCheckboxValues("platforms"),
-        daily_time: form.daily_time.value,
-        reasons: getCheckboxValues("reasons"),
-        seen_false_info: form.seen_false_info.value,
-        trust_reason: form.trust_reason.value,
-        early_access: form.early_access.value,
-        early_email: form.early_email.value,
-        country: form.country.value,
-        age_range: form.age_range.value
-      };
+    // Helper function to get all values for a checkbox group
+    const getCheckboxValues = (name) =>
+      Array.from(form.querySelectorAll(`input[name="${name}"]:checked`))
+        .map((el) => el.value)
+        .join(", ");
 
-      fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvey/sheet1", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sheet1: payload })
-      })
-      .then(res => {
+    // Handle multi-select (checkboxes)
+    payload.platforms = getCheckboxValues("platforms");
+    payload.reasons = getCheckboxValues("reasons");
+
+    
+    payload.daily_time = data.get("daily_time") || "";
+    payload.seen_false_info = data.get("seen_false_info") || "";
+    payload.trust_reason = data.get("trust_reason") || "";
+    payload.early_access = data.get("early_access") || "";
+    payload.early_email = data.get("early_email") || "";
+    payload.country = data.get("country") || "";
+    payload.age_range = data.get("age_range") || "";
+
+    fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopInSurvey/sheet1", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ sheet1: payload })
+    })
+      .then((res) => {
         if (res.ok) {
           alert("Thank you for your response!");
           window.location.href = "index.html";
         } else {
-          alert("Submission failed.");
+          alert("Submission failed. Please try again.");
         }
       })
       .catch(() => alert("Network error. Please try again."));
-    });
+  });
+</script>
 
-    function getCheckboxValues(name) {
-      return Array.from(document.querySelectorAll('input[name="${name}"]:checked'))
-        .map(input => input.value)
-        .join(", ");
-    }
-  </script>
 </body>
 </html>
