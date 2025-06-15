@@ -4,97 +4,94 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scoop-in.ai Survey</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Segoe UI', 'Inter', sans-serif;
       margin: 0;
-      background: linear-gradient(135deg, #e3eaf2, #d3dce6);
+      background: linear-gradient(145deg, #dfe5f2, #cfd7e6);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      padding: 40px 20px;
+      padding: 60px 20px;
     }
     .card {
       background: #fff;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       max-width: 700px;
       width: 100%;
       padding: 40px;
     }
     h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 20px;
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 10px;
       text-align: center;
+      color: #333;
     }
     .subtitle {
       font-size: 1rem;
-      color: #555;
+      color: #666;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
     }
     label {
       display: block;
       margin-bottom: 0.5rem;
       font-weight: 600;
+      color: #222;
     }
     .question {
-      margin-bottom: 1.8rem;
+      margin-bottom: 2rem;
     }
     .options {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
     }
-    input[type="text"],
-    input[type="email"],
-    input[type="number"],
-    select,
-    textarea {
+    input, select, textarea {
       width: 100%;
       padding: 10px;
-      border-radius: 8px;
+      border-radius: 6px;
       border: 1px solid #ccc;
       font-size: 1rem;
       margin-top: 0.25rem;
     }
     button {
-      display: inline-block;
-      background: #4E5BEF;
+      background: #4e5bef;
       color: white;
       padding: 12px 24px;
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 1rem;
       font-weight: 600;
       border: none;
       cursor: pointer;
-      transition: background 0.3s ease;
     }
     button:hover {
-      background: #3b4ac5;
-    }
-    .field {
-      margin-bottom: 1rem;
+      background: #3c48c7;
     }
     .checkbox, .radio {
       font-weight: 400;
+      font-size: 0.96rem;
+      color: #333;
     }
     @media (max-width: 600px) {
       .card {
-        padding: 20px;
+        padding: 24px;
       }
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>Scoop-in.ai Survey</h1>
-    <p class="subtitle">Help us understand how you interact with short-form videos and misinformation.</p>
-    <form method="post" id="form" action="https://sheetdb.io/api/v1/24lsa44exos6r">
+    <h1>Community Survey</h1>
+    <p class="subtitle">Your insights help us understand how people engage with short videos and misinformation online.</p>
+
+    <form method="post" action="https://sheetdb.io/api/v1/24lsa44exos6r">
+      <!-- Replace YOUR_API_KEY_HERE with your real SheetDB API key -->
 
       <div class="question">
         <label>Which platforms do you watch short form videos on?</label>
