@@ -1,186 +1,322 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Scoop-in.ai Survey</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <style>
-    body {
-      font-family: "Inter", sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(to bottom right, #e3eaf2, #d3dce6);
-    }
-    .container {
-      max-width: 800px;
-      margin: 60px auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .question {
-      margin-bottom: 25px;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 10px;
-    }
-    input[type="text"], input[type="email"], textarea, select {
-      width: 100%;
-      padding: 10px;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      background: #f9f9f9;
-    }
-    input[type="checkbox"], input[type="radio"] {
-      margin-right: 8px;
-    }
-    button {
-      background-color: #111;
-      color: #fff;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      margin-top: 20px;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>Scoop-in.ai Survey</h1>
-    <form id="survey-form">
-      <div class="question">
-        <label>Which platforms do you use for short-form videos?</label>
-        <input type="checkbox" name="platforms" value="TikTok" /> TikTok
-        <input type="checkbox" name="platforms" value="YouTube Shorts" /> YouTube Shorts
-        <input type="checkbox" name="platforms" value="Instagram Reels" /> Instagram Reels
-        <input type="checkbox" name="platforms" value="Facebook" /> Facebook
-        <input type="checkbox" name="platforms" value="Snapchat" /> Snapchat
-        <input type="checkbox" name="platforms" value="Other" /> Other
-      </div>
-
-      <div class="question">
-        <label>How much time do you spend watching daily?</label>
-        <select name="daily_time" required>
-          <option value="">-- Select --</option>
-          <option value="<30 mins"><30 mins</option>
-          <option value="30–60 mins">30–60 mins</option>
-          <option value="1–2 hrs">1–2 hrs</option>
-          <option value="2–3 hrs">2–3 hrs</option>
-          <option value="3+ hrs">3+ hrs</option>
-        </select>
-      </div>
-
-      <div class="question">
-        <label>Why do you watch short-form videos?</label>
-        <input type="checkbox" name="reasons" value="Entertainment" /> Entertainment
-        <input type="checkbox" name="reasons" value="News" /> News
-        <input type="checkbox" name="reasons" value="Education" /> Education
-        <input type="checkbox" name="reasons" value="Trends" /> Trends
-        <input type="checkbox" name="reasons" value="Product Reviews" /> Product Reviews
-        <input type="checkbox" name="reasons" value="Other" /> Other
-      </div>
-
-      <div class="question">
-        <label>Have you seen false info in short videos?</label>
-        <input type="radio" name="seen_false_info" value="Yes" /> Yes
-        <input type="radio" name="seen_false_info" value="No" /> No
-        <input type="radio" name="seen_false_info" value="Not sure" /> Not sure
-      </div>
-
-      <div class="question">
-        <label>What would make you trust a tool that identifies misinformation?</label>
-        <textarea name="trust_reason" rows="3"></textarea>
-      </div>
-
-      <div class="question">
-        <label>Would you like early access?</label>
-        <input type="radio" name="early_access" value="Yes" /> Yes
-        <input type="radio" name="early_access" value="No" /> No
-      </div>
-
-      <div class="question">
-        <label>If yes, leave your email:</label>
-        <input type="email" name="early_email" />
-      </div>
-
-      <div class="question">
-        <label>What country do you live in?</label>
-        <select name="country">
-          <option value="">-- Select --</option>
-          <option value="United States">United States</option>
-          <option value="India">India</option>
-          <option value="United Kingdom">United Kingdom</option>
-        </select>
-      </div>
-
-      <div class="question">
-        <label>What age range are you in?</label>
-        <select name="age_range">
-          <option value="">-- Select --</option>
-          <option value="<18"><18</option>
-          <option value="18–24">18–24</option>
-          <option value="25–34">25–34</option>
-          <option value="35–44">35–44</option>
-          <option value="45–54">45–54</option>
-          <option value="55+">55+</option>
-        </select>
-      </div>
-
-      <button type="submit">Submit Survey</button>
-    </form>
-  </div>
-
-<script>
-  document.getElementById("survey-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    const payload = {};
-
-    function collectMultiple(name) {
-      return Array.from(form.querySelectorAll(`input[name="${name}"]:checked`))
-        .map(el => el.value)
-        .join(", ");
-    }
-
-    payload.platforms = collectMultiple("platforms");
-    payload.daily_time = data.get("daily_time") || "";
-    payload.reasons = collectMultiple("reasons");
-    payload.seen_false_info = data.get("seen_false_info") || "";
-    payload.trust_reason = data.get("trust_reason") || "";
-    payload.early_access = data.get("early_access") || "";
-    payload.early_email = data.get("early_email") || "";
-    payload.country = data.get("country") || "";
-    payload.age_range = data.get("age_range") || "";
-
-    console.table(payload);
-
-    fetch("https://api.sheety.co/db1dfb6558709699eb77315273d56939/scoopmein/sheet1", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ sheet1: payload })
-    })
-    .then(res => {
-      if (res.ok) {
-        alert("✅ Thank you for your response!");
-        form.reset();
-      } else {
-        res.text().then(t => alert("❌ Error: " + t));
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css" />
+    <title>Survey Form</title>
+    <style>
+      /* Custom CSS for numbering questions */
+      .field.question {
+        counter-increment: question-counter;
+        margin-bottom: 1.5rem; /* Add some space between questions */
       }
-    })
-    .catch(() => alert("❌ Network error. Please try again."));
-  });
-</script>
-</body>
+
+      .field.question .label::before {
+        content: counter(question-counter) ". ";
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+
+      /* Style for checkbox groups */
+      .field.is-checkbox-group .control {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem; /* Space between checkboxes */
+      }
+
+      .field.is-checkbox-group .control .b-checkbox {
+        display: flex; /* Align checkbox and label */
+        align-items: center;
+      }
+
+      /* Style for radio buttons */
+      .field .control .radio {
+        margin-right: 1.5rem; /* Space between radio options */
+      }
+    </style>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title has-text-centered">Community Survey on Information Consumption</h1>
+        <p class="subtitle has-text-centered">Your insights help us understand how people interact with information online.</p>
+        <form method="post" id="form" class="box" action="https://sheetdb.io/api/v1/vwgdc6t4dg6fj">
+          <div class="field question is-checkbox-group">
+            <label class="label">Platform(s) You Use (Select all that apply)</label>
+            <div class="control">
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="YouTube" /> YouTube
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="Snapchat" /> Snapchat
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="Instagram Reels" /> Instagram Reels
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="Facebook" /> Facebook
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="TikTok" /> TikTok
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="X (Twitter)" /> X (Twitter)
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="Reddit" /> Reddit
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="platform[]" value="Other" /> Other
+              </label>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Daily Time on Platform(s) (hours)</label>
+            <div class="control">
+              <input class="input" type="number" name="daily_time" id="daily_time" placeholder="e.g., 2" min="0" step="0.1" />
+            </div>
+          </div>
+
+          <div class="field question is-checkbox-group">
+            <label class="label">Reasons for Use (Select all that apply)</label>
+            <div class="control">
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="Entertainment" /> Entertainment
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="News" /> News
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="Education" /> Education
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="Socializing" /> Socializing
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="Shopping" /> Shopping
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="Professional Networking" /> Professional Networking
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="reasons[]" value="Other" /> Other
+              </label>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Have you seen false information on these platforms?</label>
+            <div class="control">
+              <label class="radio"><input type="radio" name="seen_false_info" value="yes" /> Yes</label>
+              <label class="radio"><input type="radio" name="seen_false_info" value="no" /> No</label>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Have you believed wrong information from these platforms?</label>
+            <div class="control">
+              <label class="radio"><input type="radio" name="belived_wrong_info" value="yes" /> Yes</label>
+              <label class="radio"><input type="radio" name="belived_wrong_info" value="no" /> No</label>
+            </div>
+          </div>
+
+          <div class="field question is-checkbox-group">
+            <label class="label">Category of Misinformation Seen (Select all that apply)</label>
+            <div class="control">
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Health" /> Health
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Politics" /> Politics
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Science" /> Science
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Financial" /> Financial
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Current Events" /> Current Events
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Celebrity/Gossip" /> Celebrity/Gossip
+              </label>
+              <label class="b-checkbox checkbox">
+                <input type="checkbox" name="misinfo_cat[]" value="Other" /> Other
+              </label>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Trust Level in Platform(s) (1–10, 1 = No Trust, 10 = Complete Trust)</label>
+            <div class="control">
+              <input class="input" type="number" name="trust_level" id="trust_level" min="1" max="10" />
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Do you use any fact-checking tools?</label>
+            <div class="control">
+              <label class="radio"><input type="radio" name="use_tool" value="yes" /> Yes</label>
+              <label class="radio"><input type="radio" name="use_tool" value="no" /> No</label>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Preferred Fact-Checking Tool (if any)</label>
+            <div class="control">
+              <input class="input" type="text" name="tool_prefrence" id="tool_prefrence" placeholder="e.g., Google Fact Check, Snopes, PolitiFact" />
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Why do you trust this platform (or not)?</label>
+            <div class="control">
+              <textarea class="textarea" name="trust_reason" id="trust_reason" placeholder="Explain your reason"></textarea>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Do you access news early on this platform?</label>
+            <div class="control">
+              <label class="radio"><input type="radio" name="early_access" value="yes" /> Yes</label>
+              <label class="radio"><input type="radio" name="early_access" value="no" /> No</label>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Email Address (Optional)</label>
+            <div class="control">
+              <input class="input" type="email" name="email" id="email" placeholder="you@example.com" />
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Country</label>
+            <div class="control">
+              <input class="input" type="text" name="country" id="country" placeholder="Your country" />
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Age Range</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select name="age_range" id="age_range">
+                  <option value="">-- Select Age Range --</option>
+                  <option value="Under 18">Under 18</option>
+                  <option value="18-24">18-24</option>
+                  <option value="25-34">25-34</option>
+                  <option value="35-44">35-44</option>
+                  <option value="45-54">45-54</option>
+                  <option value="55+">55+</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field question">
+            <label class="label">Language</label>
+            <div class="control">
+              <input class="input" type="text" name="language" id="language" placeholder="e.g., English, Spanish" />
+            </div>
+          </div>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <button type="submit" class="button is-link" id="submit-button">Submit</button>
+            </div>
+            <div class="control">
+              <button type="button" class="button is-light">Cancel</button>
+            </div>
+          </div>
+
+          <div id="message" style="display: none; padding: 10px; border-radius: 4px; margin-top: 1rem;"></div>
+        </form>
+      </div>
+    </section>
+
+    <script>
+      const form = document.getElementById("form");
+      const submitButton = document.getElementById("submit-button");
+      const messageDiv = document.getElementById("message");
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        messageDiv.textContent = "Submitting...";
+        messageDiv.style.display = "block";
+        messageDiv.style.backgroundColor = "beige";
+        messageDiv.style.color = "black";
+        submitButton.disabled = true;
+        submitButton.classList.add("is-loading");
+
+        try {
+          const formData = new FormData(this);
+          const formDataObj = {};
+
+          // Collect all form data, handling multiple selections for checkboxes
+          for (let [key, value] of formData.entries()) {
+            if (key.endsWith('[]')) { // Check if it's a checkbox array
+              const fieldName = key.slice(0, -2); // Remove '[]'
+              if (!formDataObj[fieldName]) {
+                formDataObj[fieldName] = [];
+              }
+              formDataObj[fieldName].push(value);
+            } else {
+              formDataObj[key] = value;
+            }
+          }
+
+          // Convert checkbox arrays to comma-separated strings for SheetDB
+          for (const key in formDataObj) {
+              if (Array.isArray(formDataObj[key])) {
+                  formDataObj[key] = formDataObj[key].join(', ');
+              }
+          }
+
+          const scriptURL = this.action;
+
+          const response = await fetch(scriptURL, {
+            redirect: "follow",
+            method: "POST",
+            body: JSON.stringify(formDataObj),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.status === "success" || response.ok) {
+            messageDiv.textContent = "Data submitted successfully!";
+            messageDiv.style.backgroundColor = "#48c78e";
+            messageDiv.style.color = "white";
+            form.reset();
+            // Redirect to index.html after a short delay
+            setTimeout(() => {
+              window.location.href = "index.html";
+            }, 1500); // Redirect after 1.5 seconds so user can see success message
+          } else {
+            throw new Error(data.message || `Submission failed with status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          messageDiv.textContent = "Error: " + error.message;
+          messageDiv.style.backgroundColor = "#f14668";
+          messageDiv.style.color = "white";
+        } finally {
+          submitButton.disabled = false;
+          submitButton.classList.remove("is-loading");
+         
+        }
+      });
+
+      // Cancel button resets form
+      const cancelButton = form.querySelector("button.is-light");
+      cancelButton.addEventListener("click", () => {
+        form.reset();
+        messageDiv.style.display = "none";
+      });
+    </script>
+  </body>
 </html>
