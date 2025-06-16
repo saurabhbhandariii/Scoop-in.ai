@@ -90,6 +90,57 @@
     }
   </style>
 </head>
+<script>
+  const form = document.getElementById("form");
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const submitButton = form.querySelector("button[type='submit']");
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
+
+    const formData = new FormData(form);
+    const jsonData = {};
+
+    for (let [key, value] of formData.entries()) {
+      if (key.endsWith("[]")) {
+        const cleanKey = key.replace("[]", "");
+        jsonData[cleanKey] = (jsonData[cleanKey] || []).concat(value);
+      } else {
+        jsonData[key] = value;
+      }
+    }
+
+    // Convert arrays to comma-separated strings
+    for (const key in jsonData) {
+      if (Array.isArray(jsonData[key])) {
+        jsonData[key] = jsonData[key].join(", ");
+      }
+    }
+
+    try {
+      const response = await fetch(form.action, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+
+      if (response.ok) {
+        alert("✅ Thank you for your response!");
+        window.location.href = "index.html";
+      } else {
+        throw new Error("Submission failed.");
+      }
+    } catch (err) {
+      alert("⚠️ Error submitting form: " + err.message);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Submit";
+    }
+  });
+</script>
 <body>
   <div class="card">
     <h1>Scoop-in.ai Survey</h1>
